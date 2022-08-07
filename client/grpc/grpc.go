@@ -30,6 +30,8 @@ type grpcClient struct {
 }
 
 func init() {
+	fmt.Println("Using custom go-micro version")
+
 	encoding.RegisterCodec(wrapCodec{jsonCodec{}})
 	encoding.RegisterCodec(wrapCodec{protoCodec{}})
 	encoding.RegisterCodec(wrapCodec{bytesCodec{}})
