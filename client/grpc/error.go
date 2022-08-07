@@ -22,16 +22,16 @@ func microError(err error) error {
 		return err
 	}
 
+	// try to decode micro *errors.Error
+	if e := errors.Parse(s.Message()); e.Code > 0 {
+		return e // actually a micro error
+	}
+
 	// return first error from details
 	if details := s.Details(); len(details) > 0 {
 		if verr, ok := details[0].(error); ok {
 			return microError(verr)
 		}
-	}
-
-	// try to decode micro *errors.Error
-	if e := errors.Parse(s.Message()); e.Code > 0 {
-		return e // actually a micro error
 	}
 
 	// fallback
